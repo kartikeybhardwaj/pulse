@@ -12,6 +12,7 @@ frontend/.svelte-kit/
 # Infra
 infra/.venv/
 infra/cdk.out/
+infra/build/
 
 # OS
 .DS_Store
