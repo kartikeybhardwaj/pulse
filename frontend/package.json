@@ -1,6 +1,9 @@
 {
   "name": "pulse-frontend",
   "version": "1.0.0",
+  "description": "Real-time polling app — lightweight SvelteKit SPA",
+  "author": "Kartikey Bhardwaj",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {

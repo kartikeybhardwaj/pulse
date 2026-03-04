@@ -24,5 +24,8 @@ Thumbs.db
 *.swp
 *.swo
 
+# Environment
+.env*
+
 # Logs
 *.log

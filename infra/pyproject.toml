@@ -1,6 +1,9 @@
 [project]
 name = "pulse-infra"
 version = "1.0.0"
+description = "Pulse infrastructure — AWS CDK stack for serverless polling app"
+license = "MIT"
+authors = [{name = "Kartikey Bhardwaj", email = "kartikey.bh21@gmail.com"}]
 requires-python = ">=3.12"
 dependencies = [
     "aws-cdk-lib>=2.239.0",

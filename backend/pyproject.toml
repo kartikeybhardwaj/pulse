@@ -1,6 +1,9 @@
 [project]
 name = "pulse-backend"
 version = "1.0.0"
+description = "Pulse backend — AWS Lambda handlers for real-time polling"
+license = "MIT"
+authors = [{name = "Kartikey Bhardwaj", email = "kartikey.bh21@gmail.com"}]
 requires-python = ">=3.12"
 
 [project.optional-dependencies]
