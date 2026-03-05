@@ -10,8 +10,9 @@
 	});
 
 	let mode = $state('signin'); // signin | signup | verify
-	let email = $state('');
-	let password = $state('');
+	const isDemo = import.meta.env.VITE_DEMO === 'true';
+	let email = $state(isDemo ? 'demo@pulse.app' : '');
+	let password = $state(isDemo ? 'demo' : '');
 	let username = $state('');
 	let verifyEmail = $state('');
 	let verifyPassword = $state('');
