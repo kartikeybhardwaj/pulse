@@ -21,12 +21,20 @@
 		};
 	});
 
+	let isDemo = import.meta.env.VITE_DEMO === 'true';
+
 	function toggleTheme() {
 		theme.update((t) => (t === 'dark' ? 'light' : 'dark'));
 	}
 </script>
 
 <div class="shell">
+	{#if isDemo}
+		<a href="https://github.com/kartikeybhardwaj/pulse" target="_blank" rel="noopener" class="demo-banner">
+			🚀 This is a demo - all data is local to your browser.
+			<span class="demo-link">View on GitHub →</span>
+		</a>
+	{/if}
 	{#if offline}
 		<div class="offline-bar">You're offline — some features may not work</div>
 	{/if}
@@ -76,6 +84,27 @@
 		color: white;
 		border-radius: var(--radius-sm);
 		margin-top: 0.5rem;
+	}
+	.demo-banner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.45rem;
+		font-size: 0.78rem;
+		background: var(--accent-soft);
+		color: var(--accent);
+		border-radius: var(--radius-sm);
+		margin-top: 0.5rem;
+		text-decoration: none;
+		transition: background var(--transition);
+	}
+	.demo-banner:hover {
+		background: var(--accent);
+		color: white;
+	}
+	.demo-link {
+		font-weight: 500;
 	}
 	nav {
 		display: flex;
