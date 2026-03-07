@@ -199,6 +199,10 @@ Open the `DistributionUrl` in your browser. You should see the Pulse app. CloudF
 
 Pulse includes a fully functional demo mode that runs entirely in the browser — no backend or AWS account needed. All data is stored in localStorage with pre-seeded polls and users.
 
+**Try it live:** [https://kartikeybhardwaj.github.io/site-pulse-demo](https://github.com/kartikeybhardwaj/site-pulse-demo)
+
+To run the demo locally:
+
 ```bash
 cd frontend
 npm install
