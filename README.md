@@ -302,32 +302,36 @@ All limits are per-second (rate) with burst capacity. Enforced at API Gateway le
 
 ## Hosting Cost Estimate
 
-Most services fall within the AWS Free Tier for low-to-moderate usage. Below is a breakdown per service.
+Based on **AWS pricing (March 2026)** for `us-east-1`. Most services fall within the AWS Free Tier for low-to-moderate usage.
 
-### Always Free
+### 1. Always Free (Perpetual)
 
-| Service | What Pulse Uses | Free Tier |
-| --- | --- | --- |
-| SSM Parameter Store | JWT secret (1 standard param) | 10,000 standard params, free forever |
-| DynamoDB | Single table, on-demand | 25 GB storage, always free |
-| CloudFront | SPA + API proxy | $0/month flat-rate free plan (includes CDN, WAF, DDoS protection) |
+These limits reset monthly and never expire. "Overage Price" applies only if you exceed these limits.
 
-### Free Tier (12 months)
+| Service | Pulse Usage | Free Tier Limit | Overage Price (if exceeded) |
+| :--- | :--- | :--- | :--- |
+| **Lambda** | 6 functions | **1M requests** + 400k GB-s | **$0.20** / 1M requests + $0.0000167/GB-s |
+| **CloudFront** | CDN Proxy | **1 TB** Data Transfer Out | **$0.085** / GB (US/Europe) |
+| **SSM Params** | JWT Secret | **10,000** standard params | **$0.05** / param (Must upgrade to "Advanced") |
+| **DynamoDB** | Database | **25 GB** Storage | **$0.25** / GB |
 
-| Service | What Pulse Uses | Free Tier (monthly) | After Free Tier |
-| --- | --- | --- | --- |
-| Lambda | 6 functions (auth, REST, 3× WS, broadcast) | 1M requests + 400,000 GB-s | $0.20/M requests + $0.0000166667/GB-s |
-| API Gateway (REST) | Auth + poll CRUD | 1M REST API calls | $3.50/M calls |
-| API Gateway (WebSocket) | Real-time updates | 1M messages + 750K conn-min | $1.00/M messages + $0.25/M conn-min |
-| S3 | Frontend static files (~2 MB) | Covered by $200 new-account credits | $0.023/GB + $0.0004/1K GET |
-| SES | Verification + reset emails | 3,000 emails/month | $0.10/1,000 emails |
+### 2. Free Tier (First 12 Months)
+
+These expire 1 year after sign-up. Standard rates apply afterwards.
+
+| Service | Pulse Usage | Free Tier (Monthly) | Standard Price (Post-Trial) |
+| :--- | :--- | :--- | :--- |
+| **API Gateway** | REST API | 1M calls | **$3.50** / million calls |
+| **API Gateway** | WebSocket | 1M msgs + 750k conn-min | **$1.00** / million msgs |
+| **S3** | Static Assets | 5 GB Storage + 20k GETs | **$0.023** / GB |
+| **SES** | Emails | 3,000 emails | **$0.10** / 1,000 emails |
 
 ### Estimated Monthly Cost
 
-| Usage Level | Estimated Cost |
-| --- | --- |
-| Light (< 100 users, < 1K polls) | **$0** (within free tier) |
-| Medium (500 users, 5K polls, 50K votes) | **~$1–3/month** |
-| Heavy (5K users, 50K polls, 500K votes) | **~$10–20/month** |
+| Usage Level | Estimated Cost | Notes |
+| :--- | :--- | :--- |
+| **Light** (< 100 users) | **$0.00** | Fully covered by Free Tier (using Provisioned DynamoDB) |
+| **Medium** (~50k votes) | **~$1.25** | Primary cost is DynamoDB Write Units |
+| **Heavy** (~500k votes) | **~$18.50** | Driven by API Gateway & Database throughput |
 
 All pricing is for `us-east-1`. Use the [AWS Pricing Calculator](https://calculator.aws) for precise estimates.
