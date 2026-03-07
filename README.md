@@ -1,5 +1,7 @@
 # Pulse — Real-Time Poll App
 
+**Try it live:** [https://kartikeybhardwaj.github.io/site-pulse-demo](https://github.com/kartikeybhardwaj/site-pulse-demo)
+
 A minimalistic, open-source, real-time polling app built for small and large orgs that want quick decisions without the bloat.
 
 Most polling tools are either buried inside heavy platforms (Slack, Teams, Google Forms), locked behind paywalls, or overloaded with features nobody asked for. Pulse is different — it's a standalone app that does one thing well: fast, neat, real-time polls.
@@ -198,8 +200,6 @@ Open the `DistributionUrl` in your browser. You should see the Pulse app. CloudF
 ## Demo Mode
 
 Pulse includes a fully functional demo mode that runs entirely in the browser — no backend or AWS account needed. All data is stored in localStorage with pre-seeded polls and users.
-
-**Try it live:** [https://kartikeybhardwaj.github.io/site-pulse-demo](https://github.com/kartikeybhardwaj/site-pulse-demo)
 
 To run the demo locally:
 
