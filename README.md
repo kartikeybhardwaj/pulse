@@ -2,6 +2,8 @@
 
 **Try it live:** [demo.pulse.kartikeybhardwaj.com](https://demo.pulse.kartikeybhardwaj.com/) · [GitHub mirror](https://github.com/kartikeybhardwaj/site-pulse-demo)
 
+[![Pulse: Real-Time Polls - Lightweight real-time polls - open source & self-hosted | Product Hunt](https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1092318&theme=neutral&t=1772923543909)](https://www.producthunt.com/products/pulse-real-time-polls?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-pulse-real-time-polls)
+
 A minimalistic, open-source, real-time polling app built for small and large orgs that want quick decisions without the bloat.
 
 Most polling tools are either buried inside heavy platforms (Slack, Teams, Google Forms), locked behind paywalls, or overloaded with features nobody asked for. Pulse is different — it's a standalone app that does one thing well: fast, neat, real-time polls.
