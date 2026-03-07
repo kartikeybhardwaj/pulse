@@ -1,6 +1,6 @@
 # Pulse — Real-Time Poll App
 
-**Try it live:** [https://kartikeybhardwaj.github.io/site-pulse-demo](https://github.com/kartikeybhardwaj/site-pulse-demo)
+**Try it live:** [demo.pulse.kartikeybhardwaj.com](https://demo.pulse.kartikeybhardwaj.com/) · [GitHub mirror](https://kartikeybhardwaj.github.io/site-pulse-demo)
 
 A minimalistic, open-source, real-time polling app built for small and large orgs that want quick decisions without the bloat.
 
