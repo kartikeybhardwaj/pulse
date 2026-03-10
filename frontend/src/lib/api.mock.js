@@ -15,7 +15,28 @@ function genId() {
 
 function load() {
 	const raw = localStorage.getItem(STORAGE_KEY);
-	if (raw) return JSON.parse(raw);
+	if (raw) {
+		const data = JSON.parse(raw);
+		// Merge any new seed polls/votes/users that were added after the user's first visit
+		const fresh = seed();
+		const existingPollIds = new Set(data.polls.map((p) => p.pollId));
+		for (const p of fresh.polls) {
+			if (!existingPollIds.has(p.pollId)) data.polls.push(p);
+		}
+		const existingVoteKeys = new Set(data.votes.map((v) => `${v.pollId}:${v.alias}`));
+		for (const v of fresh.votes) {
+			if (!existingVoteKeys.has(`${v.pollId}:${v.alias}`)) data.votes.push(v);
+		}
+		for (const [k, u] of Object.entries(fresh.users)) {
+			if (!data.users[k]) data.users[k] = u;
+		}
+		for (const [k, v] of Object.entries(fresh.emails)) {
+			if (!data.emails[k]) data.emails[k] = v;
+		}
+		refreshTimestamps(data);
+		save(data);
+		return data;
+	}
 	const data = seed();
 	save(data);
 	return data;
@@ -23,6 +44,30 @@ function load() {
 
 function save(data) {
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+// Seed poll IDs — only these get their timestamps refreshed
+const SEED_IDS = new Set(['techstack', 'lunch', 'spirit', 'hackathon', 'private1']);
+
+// Offsets from now() for each seed poll: [createdAt offset, expiresAt offset]
+const SEED_TIMES = {
+	techstack: [-3600, 86400],
+	lunch: [-7200, 172800],
+	spirit: [-1800, 604800],
+	hackathon: [-600, 259200],
+	private1: [-900, 604800],
+	expired1: [-172800, -3600]
+};
+
+function refreshTimestamps(data) {
+	const t = now();
+	for (const p of data.polls) {
+		const offsets = SEED_TIMES[p.pollId];
+		if (!offsets) continue;
+		p.createdAt = t + offsets[0];
+		p.expiresAt = t + offsets[1];
+		p.deletesAt = t + 15552000;
+	}
 }
 
 function getUser() {
@@ -144,6 +189,23 @@ function seed() {
 				anonVoters: true,
 				visibleVoters: false,
 				private: true
+			},
+			{
+				pollId: 'expired1',
+				question: 'Should we adopt a monorepo?',
+				description: 'This poll has ended — results are final',
+				questionLink: null,
+				options: ['Yes, single repo', 'No, keep multi-repo', 'Hybrid approach'],
+				optionLinks: [null, null, null],
+				creator: 'bob',
+				status: 'expired',
+				createdAt: t - 172800,
+				expiresAt: t - 3600,
+				deletesAt: t + 15552000,
+				anonCreator: false,
+				anonVoters: false,
+				visibleVoters: true,
+				private: false
 			}
 		],
 		votes: [
@@ -166,7 +228,12 @@ function seed() {
 			{ pollId: 'hackathon', alias: 'demo', option: 'Developer productivity' },
 			{ pollId: 'private1', alias: 'demo', option: 'Maybe, trial first' },
 			{ pollId: 'private1', alias: 'alice', option: 'Yes, absolutely' },
-			{ pollId: 'private1', alias: 'bob', option: 'Yes, absolutely' }
+			{ pollId: 'private1', alias: 'bob', option: 'Yes, absolutely' },
+			{ pollId: 'expired1', alias: 'demo', option: 'Hybrid approach' },
+			{ pollId: 'expired1', alias: 'alice', option: 'Yes, single repo' },
+			{ pollId: 'expired1', alias: 'bob', option: 'Hybrid approach' },
+			{ pollId: 'expired1', alias: 'carol', option: 'No, keep multi-repo' },
+			{ pollId: 'expired1', alias: 'dave', option: 'Hybrid approach' }
 		]
 	};
 }
