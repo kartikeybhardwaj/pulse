@@ -6,6 +6,8 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 
+	import { goto } from '$app/navigation';
+
 	let { children } = $props();
 	let offline = $state(false);
 
@@ -49,7 +51,7 @@
 		</div>
 		{#if $isLoggedIn}
 			<span class="user-badge">{$user}</span>
-			<button class="nav-btn" onclick={logout}>Sign out</button>
+			<button class="nav-btn" onclick={() => { logout(); goto('/'); }}>Sign out</button>
 		{:else}
 			<a href="/auth" class="nav-btn">Sign in</a>
 		{/if}
