@@ -61,6 +61,10 @@ button {
 	outline: none;
 }
 
+button:disabled {
+	cursor: not-allowed;
+}
+
 input, textarea, select {
 	font-family: var(--font);
 	background: var(--bg-input);
