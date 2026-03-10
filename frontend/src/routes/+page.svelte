@@ -88,20 +88,18 @@
 							{/if}
 						</span>
 					</div>
-					{#if poll.status === 'active'}
-						<div class="quick-options">
-							{#each poll.options as option}
-								<button
-									class="option-btn"
-									class:voted={poll.myVote === option}
-									disabled={!$isLoggedIn}
-									onclick={() => quickVote(poll.pollId, option)}
-								>
-									{option}
-								</button>
-							{/each}
-						</div>
-					{/if}
+					<div class="quick-options">
+						{#each poll.options as option}
+							<button
+								class="option-btn"
+								class:voted={poll.myVote === option}
+								disabled={poll.status !== 'active' || !$isLoggedIn}
+								onclick={() => quickVote(poll.pollId, option)}
+							>
+								{option}
+							</button>
+						{/each}
+					</div>
 				</div>
 			{/each}
 		</div>
