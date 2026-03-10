@@ -173,12 +173,14 @@ def _list_polls(event, alias):
 
 
 def _close_poll(poll_id, alias):
-    """Toggle poll status: active → closed, closed → active."""
+    """Toggle poll status: active → closed, closed → active. Expired polls cannot be reopened."""
     poll = get_poll(poll_id)
     if not poll:
         return response(404, {"error": "Poll not found"})
     if poll.creator != alias:
         return response(403, {"error": "Not the poll creator"})
+    if poll.status == "expired":
+        return response(400, {"error": "Expired polls cannot be reopened"})
 
     new_status = "active" if poll.status == "closed" else "closed"
     update_poll_status(poll_id, new_status)

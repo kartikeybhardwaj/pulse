@@ -426,6 +426,7 @@ export const api = {
 		const data = load();
 		const poll = data.polls.find((p) => p.pollId === id);
 		if (!poll) throw new Error('Poll not found');
+		if (poll.status === 'expired') throw new Error('Expired polls cannot be reopened');
 		poll.status = poll.status === 'closed' ? 'active' : 'closed';
 		save(data);
 		return { status: poll.status };
