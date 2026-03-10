@@ -40,6 +40,21 @@
 		}
 	}
 
+
+	async function quickVote(pollId, option) {
+		try {
+			const existing = polls.find((p) => p.pollId === pollId);
+			const newVote = existing?.myVote === option ? null : option;
+			polls = polls.map((p) => (p.pollId === pollId ? { ...p, myVote: newVote } : p));
+			await api.vote(pollId, option);
+			const fresh = await api.getPoll(pollId);
+			polls = polls.map((p) =>
+				p.pollId === pollId ? { ...p, myVote: fresh.myVote, results: fresh.results, totalVotes: fresh.totalVotes } : p
+			);
+		} catch (e) {
+			toasts.add(e.message, 'error');
+		}
+	}
 	async function togglePoll(id) {
 		try {
 			const res = await api.closePoll(id);
@@ -79,6 +94,18 @@
 			{#each polls as poll (poll.pollId)}
 				<div class="card">
 					<a href="/p/{poll.pollId}" class="question">{poll.question}</a>
+					<div class="quick-options">
+						{#each poll.options as option}
+							<button
+								class="option-btn"
+								class:voted={poll.myVote === option}
+								disabled={poll.status !== 'active'}
+								onclick={() => quickVote(poll.pollId, option)}
+							>
+								{option}
+							</button>
+						{/each}
+					</div>
 					<div class="card-footer">
 						<span class="badge {poll.status}">{poll.status}</span>
 						<div class="actions">
@@ -153,6 +180,31 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+	.quick-options {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+	.option-btn {
+		padding: 0.35rem 0.8rem;
+		border-radius: 999px;
+		font-size: 0.8rem;
+		background: var(--accent-soft);
+		color: var(--accent);
+		transition: all var(--transition);
+	}
+	.option-btn:hover {
+		background: var(--accent);
+		color: white;
+	}
+	.option-btn.voted {
+		background: var(--accent);
+		color: white;
+	}
+	.option-btn:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
 	}
 	.badge {
 		padding: 0.15rem 0.5rem;
