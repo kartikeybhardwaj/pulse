@@ -7,7 +7,7 @@ authors = [{name = "Kartikey Bhardwaj", email = "kartikey.bh21@gmail.com"}]
 requires-python = ">=3.12"
 
 [project.optional-dependencies]
-dev = ["ruff>=0.15.2", "pytest>=8.0", "moto[dynamodb]>=5.0", "boto3>=1.35"]
+dev = ["ruff>=0.15.2", "pytest>=9.0.3", "moto[dynamodb]>=5.0", "boto3>=1.35"]
 
 [tool.ruff]
 line-length = 120
