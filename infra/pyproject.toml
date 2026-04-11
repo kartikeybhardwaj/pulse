@@ -7,7 +7,7 @@ authors = [{name = "Kartikey Bhardwaj", email = "kartikey.bh21@gmail.com"}]
 requires-python = ">=3.12"
 dependencies = [
     "aws-cdk-lib>=2.239.0",
-    "constructs>=10.5.1",
+    "constructs>=10.6.0",
 ]
 
 [project.optional-dependencies]
